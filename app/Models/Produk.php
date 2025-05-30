@@ -9,4 +9,5 @@ class Produk extends Model
 {
     use HasFactory; // Khusus laravel dibawah 12
     protected $table = 'tblproduk';
+    public $timestamps = false;
 }

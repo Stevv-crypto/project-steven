@@ -46,8 +46,13 @@ Route::get('/forgotPassword2', function() {
     return view('pages/forgotPassword2');
 });
 
+Route::get('/inputProduk', function() {
+    return view('inputProduk');
+});
+
 Route::get('/home', [MenuCobaController::class, 'test']);
 Route::get('/list-produk', [ListProdukController::class, 'tampilProduk']);
 Route::get('/latFlow', [LatFlowController::class, 'tampilFlow']);
 Route::get('/viewAll', [viewAllController::class, 'tampilProduk']);
 Route::get('/list_produk', [ListProdukController::class, 'show']);
+Route::post('/list_produk', [ListProdukController::class, 'simpan'])->name('produk.simpan');
