@@ -18,17 +18,46 @@ class ListProdukController extends Controller
     }
 
     public function show() {
-        $data = Produk::get();
+        $data = Produk::all();
         // $data = Produk::where('deskripsi', 'like', '%bagus%')->get();
         // $data = Produk::where('deskripsi', 'like', '%bagus%')->orderBy('harga', 'asc')->get();
-        $nama = $desc = $harga = [];
 
-        foreach ($data as $produk) {
-            $nama[] = $produk->nama;
-            $desc[] = $produk->deskripsi;
-            $harga[] = $produk->harga;
+        return view('list_produk', compact('data'));
+    }
+
+    public function delete($id) {
+        $produk = Produk::where('id', $id)->first();
+        if($produk) {
+            $produk->delete();
+            return redirect()->back()->with('success', 'Produk berhasil dihapus.');
+        } else {
+            return redirect()->back()->with('error', 'Produk tidak ditemukan.');
         }
+    }
 
-        return view('list_produk', compact('nama', 'desc', 'harga'));
+    public function edit($id) {
+        $produk = Produk::findOrFail($id);
+        return view('editProduk', compact('produk'));
+    }
+
+    public function update(Request $request, $id) {
+        $request->validate([
+            'nama' => 'required|string|max:255',
+            'deskripsi' => 'required|string',
+            'harga' => 'required|numeric',
+        ]);
+
+        $produk = Produk::find($id);
+
+        if ($produk) {
+            $produk->nama = $request->input('nama');
+            $produk->deskripsi = $request->input('deskripsi');
+            $produk->harga = $request->input('harga');
+            $produk->save();
+
+            return redirect('list_produk')->with('success', 'Produk berhasil diperbarui.');
+        } else {
+            return redirect()->back()->with('error', 'Produk tidak ditemukan.');
+        }
     }
 }

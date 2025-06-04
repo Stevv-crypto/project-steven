@@ -55,4 +55,7 @@ Route::get('/list-produk', [ListProdukController::class, 'tampilProduk']);
 Route::get('/latFlow', [LatFlowController::class, 'tampilFlow']);
 Route::get('/viewAll', [viewAllController::class, 'tampilProduk']);
 Route::get('/list_produk', [ListProdukController::class, 'show']);
+Route::get('/list_produk/{id}/edit', [ListProdukController::class, 'edit'])->name('produk.edit');
 Route::post('/list_produk', [ListProdukController::class, 'simpan'])->name('produk.simpan');
+Route::put('/list_produk/{id}', [ListProdukController::class, 'update'])->name('produk.update');
+Route::delete('/list_produk/{id}', [ListProdukController::class, 'delete'])->name('produk.delete');
